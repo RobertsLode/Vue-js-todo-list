@@ -1,25 +1,40 @@
 <template>
   <div class="home">
-    <h1>Planner</h1>
-    <br />
-    <input type="text" v-model="inputValue" />
-    <button @click="addTask()">Add to list!</button>
+    <div class="planner--box">
+      <h1>Planner</h1>
+      <br />
+      <div class="input--and-button">
+        <form @submit.prevent action="">
+          <input type="text" v-model="inputValue" />
+          <button @click="addTask()">Add to list!</button>
+        </form>
+      </div>
+      <div class="list--box">
+        <div class="list--box-child">
+          <div
+            class="list--box-child-li"
+            v-for="todo in filtered"
+            :key="todo.id"
+          >
+            <div class="checkbox--and-todo">
+              <input
+                type="checkbox"
+                @click="isCompleted(todo.id)"
+                :checked="todo.isCompleted"
+              />
+              <div class="text" :class="{ line: todo.isCompleted }">
+                {{ todo.text }}
+              </div>
+            </div>
+            <button class="li--button" @click="removeTask(todo.id)">X</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <ol>
-    <li v-for="(todo, index) in todos" :key="index">
-      <input
-        type="checkbox"
-        @click="isCompleted(index)"
-        :checked="todo.isCompleted"
-      />
-      <span :class="{ line: todo.isCompleted }">{{ todo.text }}</span>
-
-      <button @click="removeTask(index)">x</button>
-    </li>
-  </ol>
-  <button @click="filterCompleted()">Completed</button>
-  <button @click="filterNotCompleted()">In progess</button>
-  <button @click="filterAll()">All</button>
+  <button @click="filter = 'all'">All</button>
+  <button @click="filter = 'inProgress'">In progess</button>
+  <button @click="filter = 'completed'">Completed</button>
 </template>
 
 <style lang="scss">
@@ -31,53 +46,54 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "HomeView",
+
   data: () => ({
     inputValue: "",
     todos: [] as {
       text: string;
       isCompleted: boolean;
+      id: number;
     }[],
-    todosClone: [] as {
-      text: string;
-      isCompleted: boolean;
-    }[],
+
+    id: 0,
+    filter: "all" as "all" | "inProgress" | "completed",
   }),
+
+  computed: {
+    filtered() {
+      if (this.filter === "all") {
+        return this.todos;
+      } else if (this.filter === "inProgress") {
+        return this.todos.filter((todo) => !todo.isCompleted);
+      } else if (this.filter === "completed") {
+        return this.todos.filter((todo) => todo.isCompleted);
+      }
+      return this.todos;
+    },
+  },
+
   methods: {
     addTask() {
       if (this.inputValue) {
-        this.todosClone.push({
-          text: this.inputValue,
-          isCompleted: false,
-        });
         this.todos.push({
           text: this.inputValue,
           isCompleted: false,
+          id: this.id++,
         });
       }
+
       this.inputValue = "";
     },
+
     removeTask(index: number) {
-      this.todosClone.splice(index, 1);
-      this.todos.splice(index, 1);
+      this.todos = this.todos.filter((todo) => todo.id !== index);
     },
-    isCompleted(index: number) {
-      if (this.todos[index]) {
-        this.todos[index].isCompleted = !this.todos[index].isCompleted;
-      }
-    },
-    filterCompleted() {
-      let a = this.todosClone.filter((todo) => todo.isCompleted);
-      this.todos = a;
-    },
-    filterNotCompleted() {
-      let a = this.todosClone.filter((todo) => !todo.isCompleted);
-      this.todos = a;
-    },
-    filterAll() {
-      console.log(this.todosClone);
-      let a = this.todosClone.filter((todo) => todo);
-      this.todos = a;
-      console.log(this.todosClone);
+
+    isCompleted(id: number) {
+      const index = this.todos.findIndex((todo) => {
+        return id === todo.id;
+      });
+      this.todos[index].isCompleted = !this.todos[index].isCompleted;
     },
   },
 });

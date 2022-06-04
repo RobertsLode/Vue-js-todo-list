@@ -1,0 +1,53 @@
+.services {
+    display: flex;
+    justify-content: center;
+}
+
+.services--main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    background-color: lightblue;
+    padding: 50px 20px 40px 20px;
+}
+
+.services--main-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 70%;
+    gap: 15px;
+}
+
+.service--box {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 25px;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    background-color: lightgreen;
+    cursor: pointer;
+}
+
+.line {
+    width: 77%;
+    height: 0px;
+    border-top: 1px solid black;
+    margin-top: 30px;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    margin-top: 30px;
+}
+
+.active {
+    background-color: pink;
+}

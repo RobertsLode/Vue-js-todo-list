@@ -1,3 +1,74 @@
+.home {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
 .line {
     text-decoration: line-through;
+}
+
+.list--box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.list--box-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 51%;
+    margin-top: 10px;
+}
+
+.list--box-child-li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.li--button {
+    display: flex;
+    justify-self: flex-end;
+    align-self: flex-end;
+    border: none;
+    color: red;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.planner--box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid rgb(185, 185, 185);
+    width: 500px;
+}
+
+.input--and-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox--and-todo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.text {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 234px;
 }
